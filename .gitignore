@@ -11,3 +11,6 @@ build/
 .vscode/
 .idea/
 output_*.csv
+.audit/
+audit-J6-findings.md
+bootstrap-J6.ps1

@@ -1,4 +1,4 @@
-.env
+﻿.env
 __pycache__/
 *.pyc
 venv/
@@ -12,5 +12,4 @@ build/
 .idea/
 output_*.csv
 .audit/
-audit-J6-findings.md
 bootstrap-J6.ps1

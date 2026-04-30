@@ -5,7 +5,7 @@
 [![Code style: ruff](https://img.shields.io/badge/code%20style-ruff-000000.svg)](https://github.com/astral-sh/ruff)
 [![Built with Anthropic Claude](https://img.shields.io/badge/built%20with-Claude%20AI-D97757.svg)](https://www.anthropic.com)
 
-A Python CLI that takes raw product CSVs and adds SEO tags, category paths, improved copy, and readability scores â€” via the Anthropic Claude API.
+A Python CLI that takes raw product CSVs and adds SEO tags, category paths, improved copy, and readability scores — via the Anthropic Claude API.
 
 ## Why this exists
 
@@ -122,9 +122,9 @@ csv-product-enricher/
 
 ## License
 
-MIT â€” see [LICENSE](LICENSE)
+MIT — see [LICENSE](LICENSE)
 
 ## Built by
 
-**Alexis Garcia** â€” Python Developer | AI Automation & Pipelines  
+**Alexis Garcia** — Python Developer | AI Automation & Pipelines  
 Available for freelance work: [Upwork profile](https://www.upwork.com/freelancers/~01cbfcf39110510e66)

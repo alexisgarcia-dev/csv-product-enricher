@@ -1,5 +1,5 @@
 """CSV product enricher using Anthropic Claude API."""
-import argparse, json, sys, time
+import argparse, json, os, sys, time
 from pathlib import Path
 import anthropic
 import pandas as pd
@@ -80,6 +80,9 @@ def main() -> None:
     p.add_argument("--model", default="claude-haiku-4-5-20251001", help="Anthropic model ID")
     p.add_argument("--verbose", "-v", action="store_true", help="Print prompts and responses")
     args = p.parse_args()
+    if not os.environ.get("ANTHROPIC_API_KEY"):
+        console.print("[red]Missing ANTHROPIC_API_KEY. Set it in .env[/red]")
+        sys.exit(1)
     if Path(args.output).exists():
         console.print(f"[yellow]Warning: overwriting {args.output}[/yellow]")
     df = load_csv(args.input)

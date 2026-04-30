@@ -5,7 +5,7 @@
 [![Code style: ruff](https://img.shields.io/badge/code%20style-ruff-000000.svg)](https://github.com/astral-sh/ruff)
 [![Built with Anthropic Claude](https://img.shields.io/badge/built%20with-Claude%20AI-D97757.svg)](https://www.anthropic.com)
 
-A Python CLI that takes raw product CSVs and adds SEO tags, category paths, improved copy, and readability scores — via the Anthropic Claude API.
+A Python CLI that takes raw product CSVs and adds SEO tags, category paths, improved copy, and readability scores â€” via the Anthropic Claude API.
 
 ## Why this exists
 
@@ -92,15 +92,15 @@ Data flows through a pandas DataFrame with enrichment results written back as ne
 
 **Current limitations**
 
-- Sequential processing: 500-row CSV takes ~5-8 minutes at Haiku speed (see [#1](../../issues/1) for async batching)
+- Sequential processing: 500-row CSV takes ~5-8 minutes at Haiku speed (see [#1](../../issues/4) for async batching)
 - Output quality depends on input description richness
 - No deduplication: same SKU enriched twice if duplicated in input
 
 **Planned improvements** (tracked in [issues](../../issues))
 
-- [ ] Async batch processing ([#1](../../issues/1))
-- [ ] Pytest coverage ([#2](../../issues/2))
-- [ ] GitHub Actions CI ([#3](../../issues/3))
+- [ ] Async batch processing ([#1](../../issues/4))
+- [ ] Pytest coverage ([#2](../../issues/5))
+- [ ] GitHub Actions CI ([#3](../../issues/6))
 - [ ] Configurable output field selection
 
 ## Repository structure
@@ -122,9 +122,9 @@ csv-product-enricher/
 
 ## License
 
-MIT — see [LICENSE](LICENSE)
+MIT â€” see [LICENSE](LICENSE)
 
 ## Built by
 
-**Alexis Garcia** — Python Developer | AI Automation & Pipelines  
+**Alexis Garcia** â€” Python Developer | AI Automation & Pipelines  
 Available for freelance work: [Upwork profile](https://www.upwork.com/freelancers/~01cbfcf39110510e66)

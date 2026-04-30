@@ -27,7 +27,7 @@ def call_claude(client: anthropic.Anthropic, prompt: str, model: str, verbose: b
     for attempt in range(2):
         try:
             msg = client.messages.create(
-                model=model, max_tokens=512, messages=[{"role": "user", "content": prompt}]
+                model=model, max_tokens=1024, messages=[{"role": "user", "content": prompt}]
             )
             raw = msg.content[0].text
             if verbose:
@@ -102,10 +102,12 @@ def main() -> None:
         console.print("[yellow]Interrupted — saving partial results...[/yellow]")
         partial = df.iloc[: len(results)].copy()
         _apply_results(partial, results)
+        Path(args.output).parent.mkdir(parents=True, exist_ok=True)
         partial.to_csv(args.output + ".partial.csv", index=False)
         console.print(f"[yellow]Partial output: {args.output}.partial.csv[/yellow]")
         sys.exit(1)
     _apply_results(df, results)
+    Path(args.output).parent.mkdir(parents=True, exist_ok=True)
     df.to_csv(args.output, index=False)
     n_ok = sum(1 for r in results if r)
     n_skip = len(results) - n_ok

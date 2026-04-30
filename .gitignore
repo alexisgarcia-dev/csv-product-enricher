@@ -15,3 +15,5 @@ output_*.csv
 *.partial.csv
 .audit/
 bootstrap-J6.ps1
+
+.claude/

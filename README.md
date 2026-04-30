@@ -1,5 +1,10 @@
 # CSV Product Enricher
 
+[![Python](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Code style: ruff](https://img.shields.io/badge/code%20style-ruff-000000.svg)](https://github.com/astral-sh/ruff)
+[![Built with Anthropic Claude](https://img.shields.io/badge/built%20with-Claude%20AI-D97757.svg)](https://www.anthropic.com)
+
 A Python CLI that takes raw product CSVs and adds SEO tags, category paths, improved copy, and readability scores — via the Anthropic Claude API.
 
 ## Why this exists
@@ -26,7 +31,29 @@ python enricher.py --input samples/input_sample.csv --output output_enriched.csv
 
 ## Architecture
 
-The script is split into two modules: `enricher.py` handles orchestration, retry logic, and the CLI; `prompts.py` owns the prompt template and row formatting. Data flows through a pandas DataFrame with enrichment results written back as new columns at the end of each run, avoiding partial writes on failure. Console output — progress bar, per-row status, and final summary — is handled entirely by `rich`.
+The script is split into two modules: `enricher.py` handles orchestration, retry logic, and the CLI; `prompts.py` owns the prompt template and row formatting. Console output (progress bar, per-row status, final summary) is handled entirely by `rich`.
+
+```mermaid
+flowchart LR
+    A[Input CSV] --> B[load_csv<br/>+ validate columns]
+    B --> C{For each row}
+    C --> D[build_prompt]
+    D --> E[call_claude<br/>+ retry x2]
+    E --> F[parse_response<br/>+ strict validation]
+    F --> G{Valid?}
+    G -->|Yes| H[Append to results]
+    G -->|No| I[Skip + log warning]
+    H --> C
+    I --> C
+    C -->|Done| J[Write CSV output]
+    C -->|KeyboardInterrupt| K[Save partial CSV]
+
+    style E fill:#D97757,stroke:#000,color:#fff
+    style F fill:#D97757,stroke:#000,color:#fff
+    style K fill:#FFA500,stroke:#000,color:#000
+```
+
+Data flows through a pandas DataFrame with enrichment results written back as new columns at the end of each run, avoiding partial writes on failure. If interrupted mid-run, partial results are saved with a `.partial.csv` suffix.
 
 ## Sample input / output
 
@@ -65,14 +92,33 @@ The script is split into two modules: `enricher.py` handles orchestration, retry
 
 **Current limitations**
 
-- Processes rows sequentially; a 500-row CSV takes roughly 5–8 minutes at Haiku speed
-- Output quality depends on how descriptive the input `description` column is — sparse descriptions produce generic enrichment
-- No deduplication: if the same SKU appears twice in the input, it is enriched twice
+- Sequential processing: 500-row CSV takes ~5-8 minutes at Haiku speed (see [#1](../../issues/1) for async batching)
+- Output quality depends on input description richness
+- No deduplication: same SKU enriched twice if duplicated in input
 
-**Planned improvements**
+**Planned improvements** (tracked in [issues](../../issues))
 
-- Async batch processing to reduce total runtime on large catalogs
-- Configurable output field selection (e.g., SEO tags only, skip copy rewrite)
+- [ ] Async batch processing ([#1](../../issues/1))
+- [ ] Pytest coverage ([#2](../../issues/2))
+- [ ] GitHub Actions CI ([#3](../../issues/3))
+- [ ] Configurable output field selection
+
+## Repository structure
+
+```
+csv-product-enricher/
+|-- enricher.py          # CLI + orchestration + retry logic
+|-- prompts.py           # Prompt template + row formatting
+|-- requirements.txt     # Python dependencies
+|-- .env.example         # Environment variables template
+|-- samples/             # Sample input/output CSVs
+|   |-- input_sample.csv
+|   `-- output_sample.csv
+|-- tests/               # Test suite (pytest)
+|   |-- __init__.py
+|   `-- test_enricher.py
+`-- README.md
+```
 
 ## License
 

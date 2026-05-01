@@ -17,3 +17,8 @@ output_*.csv
 bootstrap-J6.ps1
 
 .claude/
+
+# Architecture C Niveau 1 - private logs
+tasks/lessons.md
+tasks/questions.md
+tasks/blocked.md

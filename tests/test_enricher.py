@@ -37,3 +37,23 @@ def test_parse_response_invalid_json():
     """parse_response raises JSONDecodeError on malformed input."""
     with pytest.raises(json.JSONDecodeError):
         parse_response("not valid json {{{")
+
+
+def test_load_csv_missing_columns(tmp_path):
+    """load_csv raises ValueError when required columns are absent."""
+    csv_file = tmp_path / "bad_input.csv"
+    csv_file.write_text("sku,title\nSKU-001,Test Product\n")
+    with pytest.raises(ValueError, match="Missing columns"):
+        load_csv(str(csv_file))
+
+
+def test_parse_response_invalid_score():
+    """parse_response raises ValueError when readability_score is out of range."""
+    payload = {
+        "seo_tags": "tag1, tag2",
+        "category": "Cat > Sub",
+        "enhanced_description": "A description.",
+        "readability_score": 15.0,
+    }
+    with pytest.raises(ValueError, match="readability_score"):
+        parse_response(json.dumps(payload))

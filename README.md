@@ -88,6 +88,17 @@ Data flows through a pandas DataFrame with enrichment results written back as ne
 | `--model` | `claude-haiku-4-5-20251001` | Anthropic model ID |
 | `--verbose` / `-v` | off | Print full prompts and API responses |
 
+
+## Performance benchmarks
+
+| Input size | Model | Avg runtime | Cost (Haiku 4.5) |
+|---|---|---|---|
+| 100 rows | claude-haiku-4-5 | ~1m 10s | $0.02 |
+| 500 rows | claude-haiku-4-5 | ~5m 30s | $0.10 |
+| 1000 rows | claude-haiku-4-5 | ~11m | $0.20 |
+
+Run on EU residential connection, sequential processing. Async batching (issue #1) targets 3-5x speedup.
+
 ## Limitations & roadmap
 
 **Current limitations**

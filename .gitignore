@@ -25,3 +25,4 @@ tasks/blocked.md
 
 # Architecture C - private mission notes
 tasks/missions/
+*.bak.*
